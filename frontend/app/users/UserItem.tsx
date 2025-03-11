@@ -3,16 +3,14 @@ import "./UserItem.css";
 import { Link } from "react-router";
 import Card from "~/shared/UIElements/Card";
 
-export const UserItem = ({
-  userDetail,
-}: {
-  userDetail: {
-    id: string;
-    name: string;
-    image: string;
-    placeCount: number;
-  };
-}) => {
+type UserItemType = {
+  id: string;
+  name: string;
+  image: string;
+  placeCount: number;
+};
+
+export const UserItem = ({ userDetail }: { userDetail: UserItemType }) => {
   return (
     <li className="user-item">
       <Card className="user-item__content">

@@ -2,7 +2,7 @@ import { UserItem } from "./UserItem";
 import "./UserList.css";
 import Card from "~/shared/UIElements/Card";
 
-type UserType = {
+export type UserType = {
   id: string;
   name: string;
   image: string;

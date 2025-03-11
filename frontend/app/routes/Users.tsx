@@ -1,14 +1,9 @@
-import { UserList } from "~/users/UserList";
+import { UserList, type UserType } from "~/users/UserList";
 
 const Users = () => {
-  const USER_LIST: {
-    id: string;
-    name: string;
-    image: string;
-    placeCount: number;
-  }[] = [
+  const USER_LIST: UserType[] = [
     {
-      id: "12",
+      id: "u1",
       name: "Scott",
       image:
         "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
