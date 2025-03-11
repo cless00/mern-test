@@ -1,7 +1,12 @@
 import { UserList } from "~/users/UserList";
 
 const Users = () => {
-  const USER_LIST: UserType[] = [
+  const USER_LIST: {
+    id: string;
+    name: string;
+    image: string;
+    placeCount: number;
+  }[] = [
     {
       id: "12",
       name: "Scott",
