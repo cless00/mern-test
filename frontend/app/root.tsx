@@ -33,8 +33,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <div id="drawer-hook"></div>
         <div id="backdrop-hook"></div>
+        <div id="modal-hook"></div>
+        <div id="drawer-hook"></div>
         {children}
         <ScrollRestoration />
         <Scripts />
