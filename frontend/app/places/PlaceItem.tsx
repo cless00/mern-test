@@ -3,6 +3,7 @@ import "./PlaceItem.css";
 import Button from "~/shared/FormElements/Button";
 import { useState } from "react";
 import { Modal } from "~/shared/UIElements/Modal";
+import { MapContainer } from "~/shared/UIElements/MapContainer";
 
 export type PlaceItemType = {
   id: string;
@@ -34,7 +35,7 @@ export const PlaceItem = ({ place }: { place: PlaceItemType }) => {
         footer={<Button onClick={closeMapHandler}>Close</Button>}
       >
         <div className="map-container">
-          <h2>map container</h2>
+          <MapContainer center={place.location} zoom={16} />
         </div>
       </Modal>
       <li className="place-item">
