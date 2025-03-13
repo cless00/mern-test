@@ -1,5 +1,5 @@
 import { Input } from "~/shared/FormElements/Input";
-import "./NewPlace.css";
+import "./PlaceForm.css";
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "~/util/validators";
 import { useCallback, useReducer } from "react";
 import Button from "~/shared/FormElements/Button";
@@ -57,6 +57,10 @@ export const NewPlace = () => {
         isValid: false,
       },
       description: {
+        value: "",
+        isValid: false,
+      },
+      address: {
         value: "",
         isValid: false,
       },

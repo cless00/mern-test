@@ -34,11 +34,13 @@ export const Input = (
     errorText?: string;
     validators?: any[];
     onInput: (id: string, value: string | undefined, isValid: boolean) => void;
+    value?: string | undefined;
+    valid?: boolean;
   }>,
 ) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: "",
-    isValid: false,
+    value: props.value || "",
+    isValid: props.valid || false,
     isTouched: false,
   });
 
@@ -66,6 +68,7 @@ export const Input = (
       <input
         id={props.id}
         type={props.type}
+        value={value}
         placeholder={props.placeholder}
         onChange={changeHandler}
         onBlur={touchHandler}
@@ -73,6 +76,7 @@ export const Input = (
     ) : (
       <textarea
         rows={props.rows || 3}
+        value={value}
         onChange={changeHandler}
         onBlur={touchHandler}
       />
