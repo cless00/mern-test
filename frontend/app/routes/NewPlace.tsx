@@ -1,57 +1,12 @@
 import { Input } from "~/shared/FormElements/Input";
 import "./PlaceForm.css";
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "~/util/validators";
-import { useCallback, useReducer } from "react";
 import Button from "~/shared/FormElements/Button";
-
-type InputType = {
-  value: string | undefined;
-  isValid: boolean;
-};
-type StateType = {
-  inputs: {
-    [title: string]: InputType;
-    description: InputType;
-  };
-  isValid: boolean;
-};
-type ActionType = {
-  type: "INPUT_CHANGE";
-  inputId: string;
-  isValid: boolean;
-  value: string | undefined;
-};
-
-const formReducer = (state: StateType, action: ActionType): StateType => {
-  switch (action.type) {
-    case "INPUT_CHANGE":
-      let formIsValid = true;
-      for (const inputId in state.inputs) {
-        if (inputId === action.inputId) {
-          formIsValid = formIsValid && action.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.inputId]: {
-            value: action.value,
-            isValid: action.isValid,
-          },
-        },
-        isValid: formIsValid,
-      };
-    default:
-      return state;
-  }
-};
+import { useForm } from "~/shared/hook/form-hook";
 
 export const NewPlace = () => {
-  const [formState, dispatch] = useReducer(formReducer, {
-    inputs: {
+  const [formState, inputHandler] = useForm(
+    {
       title: {
         value: "",
         isValid: false,
@@ -65,21 +20,8 @@ export const NewPlace = () => {
         isValid: false,
       },
     },
-    isValid: false,
-  });
-
-  const inputHandler = useCallback(
-    (id: string, value: string | undefined, isValid: boolean) => {
-      dispatch({
-        type: "INPUT_CHANGE",
-        value: value,
-        isValid: isValid,
-        inputId: id,
-      });
-    },
-    [],
+    false,
   );
-
   const placeAddHandler = (event: any) => {
     // todo: send to backend
     event.preventDefault();

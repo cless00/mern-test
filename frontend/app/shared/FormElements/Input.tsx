@@ -34,13 +34,13 @@ export const Input = (
     errorText?: string;
     validators?: any[];
     onInput: (id: string, value: string | undefined, isValid: boolean) => void;
-    value?: string | undefined;
-    valid?: boolean;
+    initialValue?: string | undefined;
+    initialValid?: boolean;
   }>,
 ) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: props.value || "",
-    isValid: props.valid || false,
+    value: props.initialValue || "",
+    isValid: props.initialValid || false,
     isTouched: false,
   });
 

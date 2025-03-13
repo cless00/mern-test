@@ -5,6 +5,7 @@ import "./PlaceForm.css";
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "~/util/validators";
 import type { PlaceItemType } from "~/places/PlaceItem";
 import { useParams } from "react-router";
+import { useForm } from "~/shared/hook/form-hook";
 
 const DUMMY_PLACES: PlaceItemType[] = [
   {
@@ -49,6 +50,24 @@ export const UpdatePlace = () => {
     );
   }
 
+  const [formState, inputHandler] = useForm(
+    {
+      title: {
+        value: identifiedPlace.title,
+        isValid: true,
+      },
+      description: {
+        value: identifiedPlace.description,
+        isValid: true,
+      },
+      address: {
+        value: identifiedPlace.address,
+        isValid: true,
+      },
+    },
+    true,
+  );
+
   return (
     <>
       <form className="place-form">
@@ -59,9 +78,9 @@ export const UpdatePlace = () => {
           label="Title"
           errorText="Please enter a valid title."
           validators={[VALIDATOR_REQUIRE()]}
-          onInput={() => {}}
-          value={identifiedPlace.title}
-          valid={true}
+          onInput={inputHandler}
+          initialValue={formState.inputs.title.value}
+          initialValid={formState.inputs.title.isValid}
         />
         <Input
           id="description"
@@ -69,11 +88,11 @@ export const UpdatePlace = () => {
           label="Description"
           errorText="Please enter a valid description. (at least 5 characters)"
           validators={[VALIDATOR_MINLENGTH(5)]}
-          onInput={() => {}}
-          value={identifiedPlace.description}
-          valid={true}
+          onInput={inputHandler}
+          initialValue={formState.inputs.description.value}
+          initialValid={formState.inputs.description.isValid}
         />
-        <Button type="submit" disabled={true}>
+        <Button type="submit" disabled={!formState.isValid}>
           Update place
         </Button>
       </form>
