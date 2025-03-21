@@ -6,6 +6,8 @@ import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "~/util/validators";
 import type { PlaceItemType } from "~/places/PlaceItem";
 import { useParams } from "react-router";
 import { useForm } from "~/shared/hook/form-hook";
+import { useEffect, useState } from "react";
+import Card from "~/shared/UIElements/Card";
 
 const DUMMY_PLACES: PlaceItemType[] = [
   {
@@ -39,34 +41,68 @@ const DUMMY_PLACES: PlaceItemType[] = [
 ];
 
 export const UpdatePlace = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   const placeId = useParams().placeId;
+
+  const [formState, inputHandler, setFormData] = useForm(
+    {
+      title: {
+        value: "",
+        isValid: false,
+      },
+      description: {
+        value: "",
+        isValid: false,
+      },
+      address: {
+        value: "",
+        isValid: false,
+      },
+    },
+    false,
+  );
+
   const identifiedPlace = DUMMY_PLACES.find((p) => p.id === placeId);
+
+  useEffect(() => {
+    setFormData(
+      {
+        title: {
+          value: identifiedPlace?.title,
+          isValid: true,
+        },
+        description: {
+          value: identifiedPlace?.description,
+          isValid: true,
+        },
+        address: {
+          value: identifiedPlace?.address,
+          isValid: true,
+        },
+      },
+      true,
+    );
+    setIsLoading(false);
+  }, [identifiedPlace, setFormData]);
 
   if (!identifiedPlace) {
     return (
       <div className="center">
-        <h2>Place not found.</h2>
+        <Card>
+          <h2>Place not found.</h2>
+        </Card>
       </div>
     );
   }
 
-  const [formState, inputHandler] = useForm(
-    {
-      title: {
-        value: identifiedPlace.title,
-        isValid: true,
-      },
-      description: {
-        value: identifiedPlace.description,
-        isValid: true,
-      },
-      address: {
-        value: identifiedPlace.address,
-        isValid: true,
-      },
-    },
-    true,
-  );
+  if (isLoading) {
+    return (
+      <div className="center">
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
 
   return (
     <>

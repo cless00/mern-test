@@ -14,10 +14,11 @@ type StateType = {
   isValid: boolean;
 };
 type ActionType = {
-  type: "INPUT_CHANGE";
-  inputId: string;
+  type: "INPUT_CHANGE" | "SET_DATA";
+  inputId?: string;
   isValid: boolean;
-  value: string | undefined;
+  value?: string;
+  inputs?: InputsType;
 };
 
 const formReducer = (state: StateType, action: ActionType): StateType => {
@@ -35,12 +36,17 @@ const formReducer = (state: StateType, action: ActionType): StateType => {
         ...state,
         inputs: {
           ...state.inputs,
-          [action.inputId]: {
+          [action.inputId!]: {
             value: action.value,
             isValid: action.isValid,
           },
         },
         isValid: formIsValid,
+      };
+    case "SET_DATA":
+      return {
+        inputs: action.inputs!,
+        isValid: action.isValid,
       };
     default:
       return state;
@@ -53,6 +59,7 @@ export const useForm = (
 ): [
   StateType,
   (id: string, value: string | undefined, isValid: boolean) => void,
+  (inputData: InputsType, isValid: boolean) => void,
 ] => {
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: initialInputs,
@@ -71,5 +78,13 @@ export const useForm = (
     [],
   );
 
-  return [formState, inputHandler];
+  const setFormData = useCallback((inputData: InputsType, isValid: boolean) => {
+    dispatch({
+      type: "SET_DATA",
+      inputs: inputData,
+      isValid: isValid,
+    });
+  }, []);
+
+  return [formState, inputHandler, setFormData];
 };
