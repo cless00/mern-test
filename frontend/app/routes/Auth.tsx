@@ -8,10 +8,14 @@ import {
 } from "~/util/validators";
 import Card from "~/shared/UIElements/Card";
 import Button from "~/shared/FormElements/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "~/shared/context/AuthContext";
+import { useNavigate } from "react-router";
 
 export const Auth = () => {
+  const authContext = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const navigate = useNavigate();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -29,7 +33,12 @@ export const Auth = () => {
 
   const loginHandler = (event: any) => {
     event.preventDefault();
-    console.log(formState.inputs);
+    if (isLoginMode) {
+      authContext.login();
+      navigate("/");
+    } else {
+      console.log("sign up...");
+    }
   };
 
   const switchModeHandler = (event: any) => {

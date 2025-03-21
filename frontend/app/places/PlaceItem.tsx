@@ -1,9 +1,10 @@
 import Card from "~/shared/UIElements/Card";
 import "./PlaceItem.css";
 import Button from "~/shared/FormElements/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Modal } from "~/shared/UIElements/Modal";
 import { MapContainer } from "~/shared/UIElements/MapContainer";
+import { AuthContext } from "~/shared/context/AuthContext";
 
 export type PlaceItemType = {
   id: string;
@@ -19,6 +20,7 @@ export type PlaceItemType = {
 };
 
 export const PlaceItem = ({ place }: { place: PlaceItemType }) => {
+  const authContext = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -77,10 +79,14 @@ export const PlaceItem = ({ place }: { place: PlaceItemType }) => {
             <Button inverse onClick={openMapHandler}>
               View on map
             </Button>
-            <Button to={`/places/${place.id}`}>Edit</Button>
-            <Button danger onClick={openDeleteConfirmHandler}>
-              Delete
-            </Button>
+            {authContext.isLoggedIn && (
+              <Button to={`/places/${place.id}`}>Edit</Button>
+            )}
+            {authContext.isLoggedIn && (
+              <Button danger onClick={openDeleteConfirmHandler}>
+                Delete
+              </Button>
+            )}
           </div>
         </Card>
       </li>
