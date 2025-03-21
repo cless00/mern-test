@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import Card from "~/shared/UIElements/Card";
 import { PlaceItem, type PlaceItemType } from "~/places/PlaceItem";
 import "./PlaceList.css";
+import Button from "~/shared/FormElements/Button";
 
 export const PlaceList = ({ items }: { items: PlaceItemType[] }) => {
   const userId = useParams().userId;
@@ -12,7 +13,7 @@ export const PlaceList = ({ items }: { items: PlaceItemType[] }) => {
         <div className="place-list center">
           <Card>
             <h2>Place not found. Create?</h2>
-            <button>Share place</button>
+            <Button>Share place</Button>
           </Card>
         </div>
       </>

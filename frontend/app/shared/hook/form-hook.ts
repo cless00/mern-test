@@ -5,9 +5,7 @@ type InputType = {
   isValid: boolean;
 };
 type InputsType = {
-  [title: string]: InputType;
-  description: InputType;
-  address: InputType;
+  [key: string]: InputType;
 };
 type StateType = {
   inputs: InputsType;

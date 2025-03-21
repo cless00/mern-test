@@ -12,5 +12,6 @@ export default [
     route("places/new", "routes/NewPlace.tsx"),
     route("places/:placeId", "routes/UpdatePlace.tsx"),
     route(":userId/places", "routes/UserPlaces.tsx"),
+    route("auth", "routes/Auth.tsx"),
   ]),
 ] satisfies RouteConfig;
