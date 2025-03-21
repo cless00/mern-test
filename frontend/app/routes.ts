@@ -9,8 +9,10 @@ import {
 export default [
   layout("MainLayout.tsx", [
     index("routes/Users.tsx"),
-    route("places/new", "routes/NewPlace.tsx"),
-    route("places/:placeId", "routes/UpdatePlace.tsx"),
+    ...prefix("places", [
+      route("new", "routes/NewPlace.tsx"),
+      route(":placeId", "routes/UpdatePlace.tsx"),
+    ]),
     route(":userId/places", "routes/UserPlaces.tsx"),
     route("auth", "routes/Auth.tsx"),
   ]),

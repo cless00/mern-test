@@ -104,9 +104,13 @@ export const UpdatePlace = () => {
     );
   }
 
+  const updateHandler = (event: any) => {
+    event.preventDefault();
+  };
+
   return (
     <>
-      <form className="place-form">
+      <form className="place-form" onSubmit={updateHandler}>
         <Input
           id="title"
           element="input"
